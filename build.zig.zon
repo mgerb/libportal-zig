@@ -1,0 +1,17 @@
+.{
+    .name = .libportal_zig,
+    .version = "0.10.0",
+    .fingerprint = 0x973465ab3b9e691b,
+    .minimum_zig_version = "0.16.0",
+    .dependencies = .{
+        .libportal = .{
+            .url = "https://github.com/flatpak/libportal/archive/0.10.0.tar.gz",
+            .hash = "N-V-__8AAB2aDQAk8_xki7fLuqT-zfLhty-WcPmX2Ll9Wwby",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}
