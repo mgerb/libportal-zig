@@ -21,10 +21,10 @@
       packages = {
         zls = pkgs.stdenv.mkDerivation {
           pname = "zls";
-          version = "0.16.0";
+          version = "0.17.0-dev.44+8da87d4f";
           src = pkgs.fetchurl {
-            url = "https://builds.zigtools.org/zls-x86_64-linux-0.16.0.tar.xz";
-            sha256 = "sha256-3tbVYqC4buh4sd33D/qyeXzjzco7AtYHdUj51W3/lrY=";
+            url = "https://builds.zigtools.org/zls-x86_64-linux-0.17.0-dev.44+8da87d4f.tar.xz";
+            sha256 = "sha256-nqIj+ohCRnFVWRG+ul1okZGuCApOgn71x2yPZOOf8pY=";
           };
           sourceRoot = ".";
           installPhase = ''
@@ -36,7 +36,7 @@
 
       devShells.default = pkgs.mkShell {
         buildInputs = with pkgs; [
-          zig.packages.${system}."0.16.0"
+          zig.packages.${system}.master
           self.packages.${system}.zls
           glib
           pkg-config
