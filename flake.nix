@@ -36,7 +36,7 @@
 
       devShells.default = pkgs.mkShell {
         buildInputs = with pkgs; [
-          zig.packages.${system}.master
+          zig.packages.${system}."0.17.0"
           self.packages.${system}.zls
           glib
           pkg-config

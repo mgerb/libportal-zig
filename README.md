@@ -25,8 +25,8 @@ const libportal = b.dependency("libportal_zig", .{
     .target = target,
     .optimize = optimize,
 });
-exe.root_module.addImport("libportal", libportal);
-exe.root_module.addObjectFile(libportal.object.getEmittedBin());
+exe.root_module.addImport("libportal", libportal.module("libportal"));
+exe.root_module.linkLibrary(libportal.artifact("portal"));
 ```
 
 **NOTE:** libportal dynamically links to the following libraries
@@ -41,3 +41,11 @@ exe.root_module.addObjectFile(libportal.object.getEmittedBin());
 ```sh
 nix develop -c zig build run
 ```
+
+## Build the static library
+
+```sh
+nix develop -c zig build
+```
+
+The archive is written to `zig-out/lib/libportal.a`.
