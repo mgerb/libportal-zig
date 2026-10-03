@@ -1,7 +1,7 @@
 const std = @import("std");
 
 const LibportalBuild = struct {
-    object: *std.Build.Step.Compile,
+    library: *std.Build.Step.Compile,
     generated_include: std.Build.LazyPath,
     source_include: std.Build.LazyPath,
     libportal_include: std.Build.LazyPath,
@@ -75,8 +75,9 @@ fn build_static_library(
     });
     config_h.addIdent("XDP_PUBLIC", "__attribute__((visibility(\"default\"))) extern");
 
-    const libportal = b.addObject(.{
+    const libportal = b.addLibrary(.{
         .name = "portal",
+        .linkage = .static,
         .root_module = b.createModule(.{
             .target = target,
             .optimize = optimize,
@@ -137,7 +138,7 @@ fn build_static_library(
     libportal.root_module.linkSystemLibrary("glib-2.0", .{});
 
     return .{
-        .object = libportal,
+        .library = libportal,
         .generated_include = generated,
         .source_include = libportal_source.path(""),
         .libportal_include = libportal_source.path("libportal"),
@@ -162,7 +163,7 @@ pub fn build(b: *std.Build) void {
     translate_libportal.linkSystemLibrary("glib-2.0", .{});
     const libportal_module = translate_libportal.addModule("libportal");
 
-    b.addNamedLazyPath("portal", libportal.object.getEmittedBin());
+    b.installArtifact(libportal.library);
 
     // Build example.
     // ----------------------------------------------------------------------------
@@ -175,7 +176,7 @@ pub fn build(b: *std.Build) void {
         }),
     });
     example.root_module.addImport("libportal", libportal_module);
-    example.root_module.addObjectFile(libportal.object.getEmittedBin());
+    example.root_module.linkLibrary(libportal.library);
 
     const run_example = b.addRunArtifact(example);
     const run_step = b.step("run", "Run the hello world example");

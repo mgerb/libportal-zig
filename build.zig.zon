@@ -2,7 +2,7 @@
     .name = .libportal_zig,
     .version = "0.10.0",
     .fingerprint = 0x973465ab3b9e691b,
-    .minimum_zig_version = "0.17.0-dev.1824+7988f7952",
+    .minimum_zig_version = "0.17.0",
     .dependencies = .{
         .libportal = .{
             .url = "https://github.com/flatpak/libportal/archive/0.10.0.tar.gz",
